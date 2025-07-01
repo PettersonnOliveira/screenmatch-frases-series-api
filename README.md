@@ -32,15 +32,14 @@ Certifique-se de ter o seguinte software instalado:
 ### Configuração do Banco de Dados
 
 1.  **Crie um banco de dados PostgreSQL:**
-    * Nome: frases_aleatorias_db (ou o nome que preferir)
+    * Nome: `frases_aleatorias_db` (ou o nome que preferir)
     * Certifique-se de ter um usuário e senha configurados (ou use os padrões do PostgreSQL).
 
-2.  **Configure o arquivo application.properties:**
-    * No diretório src/main/resources, localize o arquivo application.properties.
+2.  **Configure o arquivo `application.properties`:**
+    * No diretório `src/main/resources`, localize o arquivo `application.properties`.
     * Atualize as propriedades de conexão com o banco de dados conforme sua configuração:
 
-    
-properties
+    ```properties
     spring.datasource.url=jdbc:postgresql://localhost:5432/frases_aleatorias_db
     spring.datasource.username={{SEU_USUARIO_POSTGRES}}
     spring.datasource.password={{SUA_SENHA_POSTGRES}}
@@ -48,37 +47,35 @@ properties
     spring.jpa.show-sql=true
     spring.jpa.properties.hibernate.format_sql=true
     spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-
+    ```
 
 3.  **Popule o Banco de Dados:**
-    * Após a primeira execução da aplicação (com ddl-auto=update), o Spring Data JPA criará a tabela frase.
-    * Use o pgAdmin (ou qualquer cliente SQL) para executar os comandos INSERT com as frases que você deseja popular no banco de dados. Exemplo:
+    * Após a primeira execução da aplicação (com `ddl-auto=update`), o Spring Data JPA criará a tabela `frase`.
+    * Use o pgAdmin (ou qualquer cliente SQL) para executar os comandos `INSERT` com as frases que você deseja popular no banco de dados. Exemplo:
 
-    
-sql
+    ```sql
     INSERT INTO frase (titulo, frase, personagem, poster) VALUES
     ('Grey''s Anatomy', 'A vida é uma série de escolhas. Algumas são fáceis, outras são difíceis, mas todas são importantes.', 'N/A', '[https://m.media-amazon.com/images/M/MV5BYTJjYmQwMmItNDBlYi00ODU3LTg5YzQtYThlM2JjYmQ3MTIxXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_FMjpg_UX1000_.jpg](https://m.media-amazon.com/images/M/MV5BYTJjYmQwMmItNDBlYi00ODU3LTg5YzQtYThlM2JjYmQ3MTIxXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_FMjpg_UX1000_.jpg)'),
     -- Adicione todas as suas frases aqui
     ('Lupin', 'A vingança é um prato que se serve frio, mas a justiça é um prato que se serve com sabedoria.', 'N/A', '[https://m.media-amazon.com/images/M/MV5BMmM2NzcxOTUtMzg4NC00ZTg2LWE5YzYtMWY1MWJmZjU5YWE0XkEyXkFqcGdeQXVyMTE0MzQwMDgy._V1_FMjpg_UX1000_.jpg](https://m.media-amazon.com/images/M/MV5BMmM2NzcxOTUtMzg4NC00ZTg2LWE5YzYtMWY1MWJmZjU5YWE0XkEyXkFqcGdeQXVyMTE0MzQwMDgy._V1_FMjpg_UX1000_.jpg)');
-
+    ```
 
 ### Executando a Aplicação Backend
 
 1.  **Abra o projeto no IntelliJ IDEA.**
-2.  **Compile o projeto** (Maven: clean install ou Build -> Rebuild Project).
-3.  **Execute a classe principal** ScreenmatchFrasesSeriesApplication.java (geralmente clicando no botão 'play' verde ao lado do main método ou no navegador do projeto).
+2.  **Compile o projeto** (Maven: `clean install` ou `Build -> Rebuild Project`).
+3.  **Execute a classe principal** `ScreenmatchFrasesSeriesApplication.java` (geralmente clicando no botão 'play' verde ao lado do `main` método ou no navegador do projeto).
 
-A aplicação será iniciada na porta 8080 por padrão.
+A aplicação será iniciada na porta `8080` por padrão.
 
 ### Configuração do CORS (para o Frontend)
 
-Esta API está configurada para permitir requisições Cross-Origin (CORS) do seu frontend. A configuração é feita através da classe CorsConfig.
+Esta API está configurada para permitir requisições Cross-Origin (CORS) do seu frontend. A configuração é feita através da classe `CorsConfig`.
 
-* **Classe:** src/main/java/com/example/Screenmatch_frases_series/config/CorsConfig.java
-* **Origem Permitida:** Atualmente configurada para http://127.0.0.1:5500. Se o seu frontend estiver em outra URL (ex: http://localhost:3000), você precisará atualizar esta linha:
+* **Classe:** `src/main/java/com/example/Screenmatch_frases_series/config/CorsConfig.java`
+* **Origem Permitida:** Atualmente configurada para `http://127.0.0.1:5500`. Se o seu frontend estiver em outra URL (ex: `http://localhost:3000`), você precisará atualizar esta linha:
 
-    
-java
+    ```java
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -87,17 +84,16 @@ java
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
-
+    ```
 
 ## 🌐 Endpoints da API
 
 A API expõe o seguinte endpoint principal:
 
-* **GET /series/frases**
+* **GET `/series/frases`**
     * **Descrição:** Retorna uma frase aleatória de filme/série do banco de dados.
     * **Exemplo de Resposta (JSON):**
-        
-json
+        ```json
         {
           "id": 1,
           "titulo": "Grey's Anatomy",
@@ -105,9 +101,9 @@ json
           "poster": "[https://m.media-amazon.com/images/M/MV5BYTJjYmQwMmItNDBlYi00ODU3LTg5YzQtYThlM2JjYmQ3MTIxXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_FMjpg_UX1000_.jpg](https://m.media-amazon.com/images/M/MV5BYTJjYmQwMmItNDBlYi00ODU3LTg5YzQtYThlM2JjYmQ3MTIxXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_FMjpg_UX1000_.jpg)",
           "personagem": "N/A"
         }
+        ```
 
-
-Você pode testar este endpoint diretamente no seu navegador acessando http://localhost:8080/series/frases.
+Você pode testar este endpoint diretamente no seu navegador acessando `http://localhost:8080/series/frases`.
 
 ## 🤝 Contribuições
 
@@ -115,11 +111,10 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull re
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a licença MIT. Consulte o arquivo LICENSE para mais detalhes.
+Este projeto está licenciado sob a licença MIT. Consulte o arquivo `LICENSE` para mais detalhes.
 
 ---
 
 ## 👨‍💻 Autor
 
-Feito por **Petterson Oliveira**  
-Aluno do programa **Oracle Next Education - ONE** e **Tecnólogo da faculdade Celso Lisboa** 🚀  
+Feito por **Petterson Oliveira** Aluno do programa **Oracle Next Education - ONE** e **Tecnólogo da faculdade Celso Lisboa** 🚀
